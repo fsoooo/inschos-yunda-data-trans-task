@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inschos.yunda.trans.task.data.mapper.CustWarrantyPersonMapper">
+
+    <sql id="Base_Column_List">
+        `id`,`warranty_uuid`,`type`,`relation_name`,`out_order_no`,`name`,`card_type`,`card_code`,`phone`,`occupation`,`birthday`,`sex`,`age`,`email`,`nationality`,`annual_income`,`height`,`weight`,`area`,`address`,`start_time`,`end_time`,`record_start_time`,`record_end_time`
+    </sql>
+
+    <insert id="insert" parameterType="CustWarrantyPerson">
+        insert into cust_warranty_person(`id`,`warranty_uuid`,`type`,`relation_name`,`out_order_no`,`name`,`card_type`,`card_code`,`phone`,`occupation`,`birthday`,`sex`,`age`,`email`,`nationality`,`annual_income`,`height`,`weight`,`area`,`address`,`start_time`,`end_time`,`record_start_time`,`record_end_time`)
+        values(#{id},#{warranty_uuid},#{type},#{relation_name},#{out_order_no},#{name},#{card_type},#{card_code},#{phone},#{occupation},#{birthday},#{sex},#{age},#{email},#{nationality},#{annual_income},#{height},#{weight},#{area},#{address},#{start_time},#{end_time},#{record_start_time},#{record_end_time})
+    </insert>
+
+    <insert id="insertAll" parameterType="java.util.List">
+        insert into
+        cust_warranty_person(`id`,`warranty_uuid`,`type`,`relation_name`,`out_order_no`,`name`,`card_type`,`card_code`,`phone`,`occupation`,`birthday`,`sex`,`age`,`email`,`nationality`,`annual_income`,`height`,`weight`,`area`,`address`,`start_time`,`end_time`,`record_start_time`,`record_end_time`)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id},#{item.warranty_uuid},#{item.type},#{item.relation_name},#{item.out_order_no},#{item.name},#{item.card_type},#{item.card_code},#{item.phone},#{item.occupation},#{item.birthday},#{item.sex},#{item.age},#{item.email},#{item.nationality},#{item.annual_income},#{item.height},#{item.weight},#{item.area},#{item.address},#{item.start_time},#{item.end_time},#{item.record_start_time},#{item.record_end_time})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="CustWarrantyPerson">
+        update cust_warranty_person set
+          `id`=#{id},`warranty_uuid`=#{warranty_uuid},`type`=#{type},`relation_name`=#{relation_name},`out_order_no`=#{out_order_no},`name`=#{name},`card_type`=#{card_type},`card_code`=#{card_code},`phone`=#{phone},`occupation`=#{occupation},`birthday`=#{birthday},`sex`=#{sex},`age`=#{age},`email`=#{email},`nationality`=#{nationality},`annual_income`=#{annual_income},`height`=#{height},`weight`=#{weight},`area`=#{area},`address`=#{address},`start_time`=#{start_time},`end_time`=#{end_time},`record_start_time`=#{record_start_time},`record_end_time`=#{record_end_time}
+        where `id`=#{id}
+    </update>
+
+    <select id="selectOne" parameterType="long" resultType="CustWarrantyPerson">
+        select
+        <include refid="Base_Column_List"/>
+        from cust_warranty_person
+        where `id`=#{id}
+    </select>
+
+</mapper>

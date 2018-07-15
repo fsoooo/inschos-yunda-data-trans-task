@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inschos.yunda.trans.task.data.mapper.PersonReferMapper">
+
+    <sql id="Base_Column_List">
+      `id`,`out_person_id`,`person_id`,`manager_uuid`,`account_uuid`,`created_at`,`updated_at`
+    </sql>
+
+    <insert id="insert" parameterType="PersonRefer">
+        insert into person_refer(`id`,`out_person_id`,`person_id`,`manager_uuid`,`account_uuid`,`created_at`,`updated_at`)
+        values(#{id},#{out_person_id},#{person_id},#{manager_uuid},#{account_uuid},#{created_at},#{updated_at})
+    </insert>
+
+    <insert id="insertAll" parameterType="java.util.List">
+        insert into person_refer(`id`,`out_person_id`,`person_id`,`manager_uuid`,`account_uuid`,`created_at`,`updated_at`)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id},#{item.out_person_id},#{item.person_id},#{item.manager_uuid},#{item.account_uuid},#{item.created_at},#{item.updated_at})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="PersonRefer">
+        update person_refer set
+          `id`=#{id},`out_person_id`=#{out_person_id},`person_id`=#{person_id},`manager_uuid`=#{manager_uuid},`account_uuid`=#{account_uuid},`created_at`=#{created_at},`updated_at`=#{updated_at}
+        where `id`=#{id}
+    </update>
+
+    <select id="selectOne" parameterType="long" resultType="PersonRefer">
+        select
+        <include refid="Base_Column_List"/>
+        from person_refer
+        where `id`=#{id}
+    </select>
+
+    <select id="selectLastOne"  resultType="PersonRefer">
+        select
+          <include refid="Base_Column_List"/>
+        from person_refer
+        order by id desc
+        limit 1
+    </select>
+
+    <select id="selectByOutPerson" resultType="PersonRefer" parameterType="long">
+        select
+        <include refid="Base_Column_List"/>
+        from person_refer
+        where out_person_id=#{_out_person_id}
+    </select>
+
+</mapper>

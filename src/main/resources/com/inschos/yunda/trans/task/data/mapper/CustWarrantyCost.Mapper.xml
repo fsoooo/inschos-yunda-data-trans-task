@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inschos.yunda.trans.task.data.mapper.CustWarrantyCostMapper">
+
+    <sql id="Base_Column_List">
+      `id`,`warranty_uuid`,`pay_time`,`phase`,`premium`,`tax_money`,`actual_pay_time`,`pay_way`,`pay_money`,`pay_status`,`is_settlement`,`bill_uuid`,`created_at`,`updated_at`
+    </sql>
+
+    <insert id="insert" parameterType="CustWarrantyCost">
+        insert into cust_warranty_cost(`id`,`warranty_uuid`,`pay_time`,`phase`,`premium`,`tax_money`,`actual_pay_time`,`pay_way`,`pay_money`,`pay_status`,`is_settlement`,`bill_uuid`,`created_at`,`updated_at`)
+        values(#{id},#{warranty_uuid},#{pay_time},#{phase},#{premium},#{tax_money},#{actual_pay_time},#{pay_way},#{pay_money},#{pay_status},#{is_settlement},#{bill_uuid},#{created_at},#{updated_at})
+    </insert>
+
+    <insert id="insertAll" parameterType="java.util.List">
+        insert into cust_warranty_cost(`id`,`warranty_uuid`,`pay_time`,`phase`,`premium`,`tax_money`,`actual_pay_time`,`pay_way`,`pay_money`,`pay_status`,`is_settlement`,`bill_uuid`,`created_at`,`updated_at`)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id},#{item.warranty_uuid},#{item.pay_time},#{item.phase},#{item.premium},#{item.tax_money},#{item.actual_pay_time},#{item.pay_way},#{item.pay_money},#{item.pay_status},#{item.is_settlement},#{item.bill_uuid},#{item.created_at},#{item.updated_at})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="CustWarrantyCost">
+        update cust_warranty_cost set
+          `id`=#{id},`warranty_uuid`=#{warranty_uuid},`pay_time`=#{pay_time},`phase`=#{phase},`premium`=#{premium},`tax_money`=#{tax_money},`actual_pay_time`=#{actual_pay_time},`pay_way`=#{pay_way},`pay_money`=#{pay_money},`pay_status`=#{pay_status},`is_settlement`=#{is_settlement},`bill_uuid`=#{bill_uuid},`created_at`=#{created_at},`updated_at`=#{updated_at}
+        where `id`=#{id}
+    </update>
+
+    <select id="selectOne" parameterType="long" resultType="CustWarrantyCost">
+        select
+        <include refid="Base_Column_List"/>
+        from cust_warranty_cost
+        where `id`=#{id}
+    </select>
+
+</mapper>

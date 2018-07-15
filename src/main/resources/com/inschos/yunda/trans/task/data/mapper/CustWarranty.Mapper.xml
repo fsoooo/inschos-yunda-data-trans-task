@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inschos.yunda.trans.task.data.mapper.CustWarrantyMapper">
+
+    <sql id="Base_Column_List">
+        `id`,`warranty_uuid`,`pre_policy_no`,`warranty_code`,`comb_product`,`comb_warranty_code`,`business_no`,`manager_uuid`,`account_uuid`,`agent_id`,`channel_id`,`plan_id`,`product_id`,`start_time`,`end_time`,`ins_company_id`,`count`,`pay_category_id`,`is_settlement`,`warranty_url`,`warranty_from`,`type`,`warranty_status`,`integral`,`express_no`,`express_company_name`,`express_address`,`express_province_code`,`express_city_code`,`express_county_code`,`express_email`,`delivery_type`,`order_time`,`resp_code`,`resp_msg`,`created_at`,`updated_at`,`state`
+    </sql>
+
+    <insert id="insert" parameterType="CustWarranty">
+        insert into cust_warranty(`id`,`warranty_uuid`,`pre_policy_no`,`warranty_code`,`comb_product`,`comb_warranty_code`,`business_no`,`manager_uuid`,`account_uuid`,`agent_id`,`channel_id`,`plan_id`,`product_id`,`start_time`,`end_time`,`ins_company_id`,`count`,`pay_category_id`,`is_settlement`,`warranty_url`,`warranty_from`,`type`,`warranty_status`,`integral`,`express_no`,`express_company_name`,`express_address`,`express_province_code`,`express_city_code`,`express_county_code`,`express_email`,`delivery_type`,`order_time`,`resp_code`,`resp_msg`,`created_at`,`updated_at`,`state`)
+        values(#{id},#{warranty_uuid},#{pre_policy_no},#{warranty_code},#{comb_product},#{comb_warranty_code},#{business_no},#{manager_uuid},#{account_uuid},#{agent_id},#{channel_id},#{plan_id},#{product_id},#{start_time},#{end_time},#{ins_company_id},#{count},#{pay_category_id},#{is_settlement},#{warranty_url},#{warranty_from},#{type},#{warranty_status},#{integral},#{express_no},#{express_company_name},#{express_address},#{express_province_code},#{express_city_code},#{express_county_code},#{express_email},#{delivery_type},#{order_time},#{resp_code},#{resp_msg},#{created_at},#{updated_at},#{state})
+    </insert>
+
+    <insert id="insertAll" parameterType="java.util.List">
+        insert into cust_warranty(`id`,`warranty_uuid`,`pre_policy_no`,`warranty_code`,`comb_product`,`comb_warranty_code`,`business_no`,`manager_uuid`,`account_uuid`,`agent_id`,`channel_id`,`plan_id`,`product_id`,`start_time`,`end_time`,`ins_company_id`,`count`,`pay_category_id`,`is_settlement`,`warranty_url`,`warranty_from`,`type`,`warranty_status`,`integral`,`express_no`,`express_company_name`,`express_address`,`express_province_code`,`express_city_code`,`express_county_code`,`express_email`,`delivery_type`,`order_time`,`resp_code`,`resp_msg`,`created_at`,`updated_at`,`state`)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id},#{item.warranty_uuid},#{item.pre_policy_no},#{item.warranty_code},#{item.comb_product},#{item.comb_warranty_code},#{item.business_no},#{item.manager_uuid},#{item.account_uuid},#{item.agent_id},#{item.channel_id},#{item.plan_id},#{item.product_id},#{item.start_time},#{item.end_time},#{item.ins_company_id},#{item.count},#{item.pay_category_id},#{item.is_settlement},#{item.warranty_url},#{item.warranty_from},#{item.type},#{item.warranty_status},#{item.integral},#{item.express_no},#{item.express_company_name},#{item.express_address},#{item.express_province_code},#{item.express_city_code},#{item.express_county_code},#{item.express_email},#{item.delivery_type},#{item.order_time},#{item.resp_code},#{item.resp_msg},#{item.created_at},#{item.updated_at},#{item.state})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="CustWarranty">
+        update cust_warranty set
+          `id`=#{id},`warranty_uuid`=#{warranty_uuid},`pre_policy_no`=#{pre_policy_no},`warranty_code`=#{warranty_code},`comb_product`=#{comb_product},`comb_warranty_code`=#{comb_warranty_code},`business_no`=#{business_no},`manager_uuid`=#{manager_uuid},`account_uuid`=#{account_uuid},`agent_id`=#{agent_id},`channel_id`=#{channel_id},`plan_id`=#{plan_id},`product_id`=#{product_id},`start_time`=#{start_time},`end_time`=#{end_time},`ins_company_id`=#{ins_company_id},`count`=#{count},`pay_category_id`=#{pay_category_id},`is_settlement`=#{is_settlement},`warranty_url`=#{warranty_url},`warranty_from`=#{warranty_from},`type`=#{type},`warranty_status`=#{warranty_status},`integral`=#{integral},`express_no`=#{express_no},`express_company_name`=#{express_company_name},`express_address`=#{express_address},`express_province_code`=#{express_province_code},`express_city_code`=#{express_city_code},`express_county_code`=#{express_county_code},`express_email`=#{express_email},`delivery_type`=#{delivery_type},`order_time`=#{order_time},`
+        where `id`=#{id}
+    </update>
+
+    <select id="selectOne" parameterType="long" resultType="CustWarranty">
+        select
+        <include refid="Base_Column_List"/>
+        from cust_warranty
+        where `id`=#{id}
+    </select>
+
+</mapper>

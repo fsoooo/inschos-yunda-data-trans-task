@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.inschos</groupId>
+  <artifactId>yunda-trans-task</artifactId>
+  <version>0.0.2-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <name>yunda-trans-task Maven Webapp</name>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <encoding>UTF-8</encoding>
+    <java.version>1.8</java.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <inschos.version>0.0.2-SNAPSHOT</inschos.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.inschos</groupId>
+      <artifactId>common</artifactId>
+      <version>${inschos.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.inschos</groupId>
+      <artifactId>web</artifactId>
+      <version>${inschos.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.inschos</groupId>
+      <artifactId>dock-api</artifactId>
+      <version>${inschos.version}</version>
+    </dependency>
+      <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>4.12</version>
+      </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>5.0.7.RELEASE</version>
+    </dependency>
+
+  </dependencies>
+
+  <repositories>
+    <!-- 配置nexus远程仓库 -->
+    <repository>
+      <id>nexus</id>
+      <name>Nexus Snapshot Repository</name>
+      <url>http://122.14.202.146:9099/nexus/content/groups/public/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+  <!-- 配置从哪个仓库中下载构件，即jar包 -->
+  <pluginRepositories>
+    <pluginRepository>
+      <id>nexus</id>
+      <name>Nexus Snapshot Repository</name>
+      <url>http://122.14.202.146:9099/content/groups/public/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <profiles>
+    <!--开发环境-->
+    <profile>
+      <id>dev</id>
+      <properties>
+        <environment>development</environment>
+      </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+    </profile>
+    <profile>
+      <!--测试环境-->
+      <id>test</id>
+      <properties>
+        <environment>test</environment>
+      </properties>
+    </profile>
+    <profile>
+      <!--本地环境-->
+      <id>local</id>
+      <properties>
+        <environment>local</environment>
+      </properties>
+    </profile>
+    <profile>
+      <!--生成环境-->
+      <id>prod</id>
+      <properties>
+        <environment>production</environment>
+      </properties>
+    </profile>
+  </profiles>
+
+  <build>
+    <finalName>customer</finalName>
+    <defaultGoal>compile</defaultGoal>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.10</version>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/lib</outputDirectory>
+              <includeScope>system</includeScope>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <excludes>
+          <exclude>environment/development/**</exclude>
+          <exclude>environment/test/**</exclude>
+          <exclude>environment/local/**</exclude>
+          <exclude>environment/production/**</exclude>
+        </excludes>
+      </resource>
+      <resource>
+        <directory>src/main/resources/environment/${environment}</directory>
+        <targetPath>.</targetPath>
+      </resource>
+    </resources>
+  </build>
+</project>

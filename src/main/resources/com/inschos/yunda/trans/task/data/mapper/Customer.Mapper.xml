@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inschos.yunda.trans.task.data.mapper.CustomerMapper">
+
+    <sql id="Base_Column_List">
+        `id`,`account_uuid`,`manager_uuid`,`type`,`agent_id`,`allot_time`,`customer_id`,`user_tag_id`,`created_at`,`updated_at`
+    </sql>
+
+    <insert id="insert" parameterType="Customer">
+        insert into customer(`id`,`account_uuid`,`manager_uuid`,`type`,`agent_id`,`allot_time`,`customer_id`,`user_tag_id`,`created_at`,`updated_at`)
+        values(
+          #{id},#{account_uuid},#{manager_uuid},#{type},#{agent_id},#{allot_time},#{customer_id},#{user_tag_id},#{created_at},#{updated_at}
+        )
+    </insert>
+
+    <insert id="insertAll" parameterType="java.util.List">
+        insert into customer(`id`,`account_uuid`,`manager_uuid`,`type`,`agent_id`,`allot_time`,`customer_id`,`user_tag_id`,`created_at`,`updated_at`)
+        values
+        <foreach collection="list" item="item" separator="," >
+            (#{item.id},#{item.account_uuid},#{item.manager_uuid},#{item.type},#{item.agent_id},#{item.allot_time},#{item.customer_id},#{item.user_tag_id},#{item.created_at},#{item.updated_at})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="Customer">
+        update customer set
+          `id`=#{id},`account_uuid`=#{account_uuid},`manager_uuid`=#{manager_uuid},`type`=#{type},`agent_id`=#{agent_id},`allot_time`=#{allot_time},`customer_id`=#{customer_id},`user_tag_id`=#{user_tag_id},`created_at`=#{created_at},`updated_at`=#{updated_at}
+        where `id`=#{id}
+    </update>
+
+    <select id="selectOne" parameterType="long" resultType="Customer">
+        select
+        <include refid="Base_Column_List"/>
+        from customer
+        where `id`=#{id}
+    </select>
+
+</mapper>

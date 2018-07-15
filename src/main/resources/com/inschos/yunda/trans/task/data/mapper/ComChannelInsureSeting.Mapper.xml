@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inschos.yunda.trans.task.data.mapper.ComChannelInsureSetingMapper">
+
+    <sql id="Base_Column_List">
+        `id`,`cust_cod`,`cust_id`,`cust_type`,`authorize_start`,`authorize_bank`,`authorize_status`,`warranty_id`,`insure_days`,`insure_start`,`auto_insure_status`,`auto_insure_price`,`auto_insure_type`,`auto_insure_time`,`updated_at`
+    </sql>
+
+
+    <select id="selectOne" parameterType="long" resultType="ComChannelInsureSeting">
+        select
+        <include refid="Base_Column_List"/>
+        from com_channel_insure_seting
+        where `id`=#{id}
+    </select>
+
+    <select id="selectPage" parameterType="Page" resultType="ComChannelInsureSeting">
+        select
+        <include refid="Base_Column_List"/>
+        from com_channel_insure_seting
+        <where>
+            id &gt;#{lastId}
+            limit #{offset}
+        </where>
+    </select>
+
+</mapper>

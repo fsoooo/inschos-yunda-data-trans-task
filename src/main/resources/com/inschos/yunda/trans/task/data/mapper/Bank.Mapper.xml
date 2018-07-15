@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inschos.yunda.trans.task.data.mapper.BankMapper">
+
+    <sql id="Base_Column_List">
+        `id`,`account_uuid`,`bank_name`,`bank_city`,`bank_code`,`bank_type`,`phone`,`status`,`state`,`created_at`,`updated_at`
+    </sql>
+
+    <insert id="insert" parameterType="Bank">
+        insert into bank(`id`,`account_uuid`,`bank_name`,`bank_city`,`bank_code`,`bank_type`,`phone`,`status`,`state`,`created_at`,`updated_at`)
+        values(#{id},#{account_uuid},#{bank_name},#{bank_city},#{bank_code},#{bank_type},#{phone},#{status},#{state},#{created_at},#{updated_at})
+    </insert>
+
+    <insert id="insertAll" parameterType="java.util.List">
+        insert into bank(`account_uuid`,`bank_name`,`bank_city`,`bank_code`,`bank_type`,`phone`,`status`,`state`,`created_at`,`updated_at`)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.account_uuid},#{item.bank_name},#{item.bank_city},#{item.bank_code},#{item.bank_type},#{item.phone},#{item.status},#{item.state},#{item.created_at},#{item.updated_at})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="Bank">
+        update bank set
+          `account_uuid`=#{account_uuid},`bank_name`=#{bank_name},`bank_city`=#{bank_city},`bank_code`=#{bank_code},`bank_type`=#{bank_type},`phone`=#{phone},`status`=#{status},`state`=#{state},`created_at`=#{created_at},`updated_at`=#{updated_at}
+        where `id`=#{id}
+    </update>
+
+    <select id="selectOne" parameterType="long" resultType="Bank">
+        select
+        <include refid="Base_Column_List"/>
+        from bank
+        where `id`=#{id}
+    </select>
+
+</mapper>

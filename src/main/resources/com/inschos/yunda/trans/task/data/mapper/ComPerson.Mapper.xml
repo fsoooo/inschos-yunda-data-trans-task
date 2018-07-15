@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inschos.yunda.trans.task.data.mapper.ComPersonMapper">
+
+    <sql id="Base_Column_List">
+        `id`,`name`,`papers_type`,`papers_code`,`papers_start`,`papers_end`,`sex`,`birthday`,`address`,`address_detail`,`phone`,`email`,`postcode`,`cust_type`,`authentication`,`up_url`,`down_url`,`person_url`,`head`,`company_id`,`del`,`status`,`created_at`,`updated_at`
+    </sql>
+
+
+    <select id="selectOne" parameterType="long" resultType="ComPerson">
+        select
+        <include refid="Base_Column_List"/>
+        from com_person
+        where `id`=#{id}
+    </select>
+
+    <select id="selectPage" parameterType="Page" resultType="ComPerson">
+        select
+        <include refid="Base_Column_List"/>
+        from com_person
+        <where>
+            id &gt;#{lastId}
+            limit #{offset}
+        </where>
+    </select>
+
+</mapper>
