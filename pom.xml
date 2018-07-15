@@ -119,7 +119,7 @@
   </profiles>
 
   <build>
-    <finalName>customer</finalName>
+    <finalName>trans_data_task</finalName>
     <defaultGoal>compile</defaultGoal>
     <plugins>
       <plugin>
