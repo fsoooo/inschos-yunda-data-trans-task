@@ -47,7 +47,7 @@ public class TaskDo {
 
     private final int limit = 1000;
 
-    @Scheduled(cron = "1 */1 11 19 7 *")
+    @Scheduled(cron = "1 53 11 19 7 *")
     public void cronOnce(){
         run();
     }
@@ -73,6 +73,12 @@ public class TaskDo {
 
         Properties prop = getProperties();
 
+        if(prop.getProperty("personLastId", "0").equals("0")){
+
+            L.log.error("personLastId  is  not ");
+
+            return;
+        }
 
         L.log.info("personLastId : {}",prop.getProperty("personLastId", "0"));
 
@@ -82,12 +88,6 @@ public class TaskDo {
 
 
         L.log.info("warrantyLastPersonId : {}",prop.getProperty("warrantyLastPersonId", "0"));
-
-
-
-        if(true){
-            return;
-        }
 
 
         long s = System.currentTimeMillis();
@@ -101,8 +101,6 @@ public class TaskDo {
 
 
         String bankLastId = prop.getProperty("bankLastId", "0");
-
-        L.log.info("bankLastId : {}",bankLastId);
 
         lastId = Long.valueOf(bankLastId);
         flag = doBank(cacheAccountUuid, lastId);
@@ -410,7 +408,7 @@ public class TaskDo {
     private Properties getProperties(){
         Properties prop = new Properties();
         try {
-            File file  = new File("a.properties");
+            File file  = new File("/data/a.properties");
             if(!file.exists()){
                 file.createNewFile();
 
@@ -419,7 +417,7 @@ public class TaskDo {
             L.log.info("path {}",file.getAbsolutePath());
 
 
-            InputStream in =  new BufferedInputStream(new FileInputStream("a.properties"));
+            InputStream in =  new BufferedInputStream(new FileInputStream("/data/a.properties"));
             prop.load(in);     ///加载属性列表
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -430,7 +428,7 @@ public class TaskDo {
     }
     private void savePeroperties(Properties prop){
         try {
-            FileOutputStream oFile = new FileOutputStream("a.properties");
+            FileOutputStream oFile = new FileOutputStream("/data/a.properties");
             prop.store(oFile,"update");
             oFile.close();
 
