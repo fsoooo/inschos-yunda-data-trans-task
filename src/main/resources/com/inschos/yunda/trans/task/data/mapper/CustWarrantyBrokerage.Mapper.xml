@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inschos.yunda.trans.task.data.mapper.CustWarrantyBrokerageMapper">
+
+    <sql id="Base_Column_List">
+        `id`,`warranty_uuid`,`manager_uuid`,`cost_id`,`channel_id`,`agent_id`,`warranty_money`,`ins_money`,`manager_money`,`channel_money`,`agent_money`,`warranty_rate`,`ins_rate`,`manager_rate`,`channel_rate`,`agent_rate`,`car_integral`,`created_at`,`updated_at`
+    </sql>
+
+    <insert id="insert" parameterType="CustWarrantyBrokerage">
+        insert into cust_warranty_brokerage(`id`,`warranty_uuid`,`manager_uuid`,`cost_id`,`channel_id`,`agent_id`,`warranty_money`,`ins_money`,`manager_money`,`channel_money`,`agent_money`,`warranty_rate`,`ins_rate`,`manager_rate`,`channel_rate`,`agent_rate`,`car_integral`,`created_at`,`updated_at`)
+        values(
+          #{id},#{warranty_uuid},#{manager_uuid},#{cost_id},#{channel_id},#{agent_id},#{warranty_money},#{ins_money},#{manager_money},#{channel_money},#{agent_money},#{warranty_rate},#{ins_rate},#{manager_rate},#{channel_rate},#{agent_rate},#{car_integral},#{created_at},#{updated_at}
+        )
+    </insert>
+
+    <insert id="insertAll" parameterType="CustWarrantyBrokerage">
+        insert into cust_warranty_brokerage(`id`,`warranty_uuid`,`manager_uuid`,`cost_id`,`channel_id`,`agent_id`,`warranty_money`,`ins_money`,`manager_money`,`channel_money`,`agent_money`,`warranty_rate`,`ins_rate`,`manager_rate`,`channel_rate`,`agent_rate`,`car_integral`,`created_at`,`updated_at`)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id},#{item.warranty_uuid},#{item.manager_uuid},#{item.cost_id},#{item.channel_id},#{item.agent_id},#{item.warranty_money},#{item.ins_money},#{item.manager_money},#{item.channel_money},#{item.agent_money},#{item.warranty_rate},#{item.ins_rate},#{item.manager_rate},#{item.channel_rate},#{item.agent_rate},#{item.car_integral},#{item.created_at},#{item.updated_at})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="CustWarrantyBrokerage">
+        update cust_warranty_brokerage set
+          `id`=#{id},`warranty_uuid`=#{warranty_uuid},`manager_uuid`=#{manager_uuid},`cost_id`=#{cost_id},`channel_id`=#{channel_id},`agent_id`=#{agent_id},`warranty_money`=#{warranty_money},`ins_money`=#{ins_money},`manager_money`=#{manager_money},`channel_money`=#{channel_money},`agent_money`=#{agent_money},`warranty_rate`=#{warranty_rate},`ins_rate`=#{ins_rate},`manager_rate`=#{manager_rate},`channel_rate`=#{channel_rate},`agent_rate`=#{agent_rate},`car_integral`=#{car_integral},`created_at`=#{created_at},`updated_at`=#{updated_at}
+        where `id`=#{id}
+    </update>
+
+    <select id="selectOne" parameterType="long" resultType="CustWarrantyBrokerage">
+        select
+        <include refid="Base_Column_List"/>
+        from cust_warranty_brokerage
+        where `id`=#{id}
+    </select>
+
+</mapper>

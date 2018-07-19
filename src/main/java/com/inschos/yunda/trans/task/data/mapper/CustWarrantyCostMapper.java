@@ -2,6 +2,7 @@ package com.inschos.yunda.trans.task.data.mapper;
 
 import com.inschos.yunda.trans.task.data.database.DataSource;
 import com.inschos.yunda.trans.task.model.CustWarrantyCost;
+import com.inschos.yunda.trans.task.model.Page;
 
 import java.util.List;
 
@@ -20,6 +21,8 @@ public interface CustWarrantyCostMapper {
     int update(CustWarrantyCost update);
 
     CustWarrantyCost selectOne(long id);
+
+    List<CustWarrantyCost> selectPageValid(Page page);
 
 
 }

@@ -17,4 +17,7 @@ public interface ComCustWarrantyMapper {
     ComCustWarranty selectOne(long id);
 
     List<ComCustWarranty> selectPage(Page page);
+
+    List<ComCustWarranty> selectPageValid(Page page);
+
 }

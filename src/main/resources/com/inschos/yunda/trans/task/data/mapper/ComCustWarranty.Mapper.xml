@@ -25,4 +25,16 @@
         </where>
     </select>
 
+    <select id="selectPageValid" parameterType="Page" resultType="ComCustWarranty">
+        select
+        <include refid="Base_Column_List"/>
+        from com_cust_warranty
+        <where>
+            id &gt;#{lastId}
+            and end_time &lt;=#{curTime}
+            and warranty_status in (4,8)
+            limit #{offset}
+        </where>
+    </select>
+
 </mapper>

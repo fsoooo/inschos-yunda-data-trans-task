@@ -15,4 +15,6 @@ public interface ComCustWarrantyService {
     ComCustWarranty selectOne(long id);
 
     List<ComCustWarranty> selectPage(Page page);
+
+    List<ComCustWarranty> selectPageValid(Page page);
 }

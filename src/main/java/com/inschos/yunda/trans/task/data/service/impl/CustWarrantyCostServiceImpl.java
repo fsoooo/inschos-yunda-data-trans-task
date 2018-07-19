@@ -3,6 +3,7 @@ package com.inschos.yunda.trans.task.data.service.impl;
 import com.inschos.yunda.trans.task.data.mapper.CustWarrantyCostMapper;
 import com.inschos.yunda.trans.task.data.service.CustWarrantyCostService;
 import com.inschos.yunda.trans.task.model.CustWarrantyCost;
+import com.inschos.yunda.trans.task.model.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -37,5 +38,10 @@ public class CustWarrantyCostServiceImpl implements CustWarrantyCostService {
     @Override
     public CustWarrantyCost selectOne(long id) {
         return custWarrantyCostMapper.selectOne(id);
+    }
+
+    @Override
+    public List<CustWarrantyCost> selectPageValid(Page page) {
+        return custWarrantyCostMapper.selectPageValid(page);
     }
 }

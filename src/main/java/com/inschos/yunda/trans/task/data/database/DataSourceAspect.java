@@ -17,7 +17,7 @@ public class DataSourceAspect {
     public void before(JoinPoint point)
     {
 
-        L.log.info("数据源的获取 DataSource: ");
+        L.log.debug("数据源的获取 DataSource: ");
         Object target = point.getTarget();// 拦截的实体类
         String method = point.getSignature().getName();// 拦截的方法名称
         Class<?>[] classz = target.getClass().getInterfaces();
@@ -29,11 +29,11 @@ public class DataSourceAspect {
                 DataSource data = m
                         .getAnnotation(DataSource.class);
                 DataSourceHolder.setDataSource(data.value());
-                L.log.info("数据源的获取 DataSource: "+data.value());
+                L.log.debug("数据源的获取 DataSource: "+data.value());
             }else if(classz[0].isAnnotationPresent(DataSource.class)){
                 DataSource data = classz[0].getAnnotation(DataSource.class);
                 DataSourceHolder.setDataSource(data.value());
-                L.log.info("数据源的获取 DataSource: "+data.value());
+                L.log.debug("数据源的获取 DataSource: "+data.value());
             }
 
         } catch (Exception e) {

@@ -43,9 +43,15 @@ public class TaskDo {
     private ComChannelInsureSetingService comChannelInsureSetingService;
     @Autowired
     private BankAuthorizeService bankAuthorizeService;
+    @Autowired
+    private CustWarrantyCostService custWarrantyCostService;
+    @Autowired
+    private CustWarrantyBrokerageService custWarrantyBrokerageService;
 
 
     private final int limit = 1000;
+
+    private final String filePath = "/data/a.properties";
 
     @Scheduled(cron = "1 53 11 19 7 *")
     public void cronOnce(){
@@ -129,6 +135,34 @@ public class TaskDo {
 
 
         e = System.currentTimeMillis();
+        L.log.info("do warranty person time :{} ; flag :{}",e-s,flag);
+
+
+
+        String brokerageLastPersonId = prop.getProperty("brokerageLastPersonId", "0");
+        lastId = Long.valueOf(brokerageLastPersonId);
+        flag = doBrokerage( lastId);
+        prop.setProperty("brokerageLastPersonId",flag+"");
+
+        e = System.currentTimeMillis();
+        L.log.info("do warranty person time :{} ; flag :{}",e-s,flag);
+
+
+
+
+        savePeroperties(prop);
+
+    }
+
+    public void testDo(){
+        Properties prop = getProperties();
+        long s = System.currentTimeMillis();
+        String brokerageLastPersonId = prop.getProperty("brokerageLastPersonId", "0");
+        long lastId = Long.valueOf(brokerageLastPersonId);
+        long flag = doBrokerage( lastId);
+        prop.setProperty("brokerageLastPersonId",flag+"");
+
+        long e = System.currentTimeMillis();
         L.log.info("do warranty person time :{} ; flag :{}",e-s,flag);
 
         savePeroperties(prop);
@@ -407,8 +441,9 @@ public class TaskDo {
 
     private Properties getProperties(){
         Properties prop = new Properties();
+
         try {
-            File file  = new File("/data/a.properties");
+            File file  = new File(filePath);
             if(!file.exists()){
                 file.createNewFile();
 
@@ -417,7 +452,7 @@ public class TaskDo {
             L.log.info("path {}",file.getAbsolutePath());
 
 
-            InputStream in =  new BufferedInputStream(new FileInputStream("/data/a.properties"));
+            InputStream in =  new BufferedInputStream(new FileInputStream(filePath));
             prop.load(in);     ///加载属性列表
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -427,8 +462,9 @@ public class TaskDo {
         return prop;
     }
     private void savePeroperties(Properties prop){
+
         try {
-            FileOutputStream oFile = new FileOutputStream("/data/a.properties");
+            FileOutputStream oFile = new FileOutputStream(filePath);
             prop.store(oFile,"update");
             oFile.close();
 
@@ -439,5 +475,41 @@ public class TaskDo {
         }
 
 
+    }
+
+    private long doBrokerage(long lastId){
+        Page wPage = new Page();
+        wPage.offset = limit;
+        List<CustWarrantyCost> comCustWarranties = null;
+        wPage.curTime = TimeKit.getDayStartTime();
+        do {
+            wPage.lastId = lastId;
+            comCustWarranties = custWarrantyCostService.selectPageValid(wPage);
+            long preLastId = lastId;
+            if (comCustWarranties != null && !comCustWarranties.isEmpty()) {
+                List<CustWarrantyBrokerage> list = new ArrayList<>();
+                for (CustWarrantyCost custWarrantyCost : comCustWarranties) {
+                    CustWarrantyBrokerage brokerage = new CustWarrantyBrokerage();
+
+                    brokerage.manager_money = "0.98";
+                    brokerage.manager_rate = "49";
+                    brokerage.ins_money = "1";
+                    brokerage.ins_rate = "50";
+                    brokerage.warranty_money = "1";
+                    brokerage.warranty_rate = "50";
+                    brokerage.warranty_uuid = custWarrantyCost.warranty_uuid;
+                    brokerage.manager_uuid = "14463303497682968";
+                    brokerage.created_at = brokerage.updated_at = TimeKit.currentTimeMillis();
+                    lastId = custWarrantyCost.id;
+                    list.add(brokerage);
+                }
+                int all = custWarrantyBrokerageService.insertAll(list);
+                if(all!=list.size()){
+                    return preLastId;
+                }
+
+            }
+        }while (comCustWarranties!=null && comCustWarranties.size()==limit);
+        return lastId;
     }
 }

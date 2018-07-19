@@ -29,4 +29,9 @@ public class ComCustWarrantyServiceImpl implements ComCustWarrantyService {
     public List<ComCustWarranty> selectPage(Page page) {
         return comCustWarrantyMapper.selectPage(page);
     }
+
+    @Override
+    public List<ComCustWarranty> selectPageValid(Page page) {
+        return comCustWarrantyMapper.selectPageValid(page);
+    }
 }
