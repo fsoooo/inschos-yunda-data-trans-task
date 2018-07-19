@@ -47,7 +47,7 @@ public class TaskDo {
 
     private final int limit = 1000;
 
-    @Scheduled(cron = "1 15 11 19 7 *")
+    @Scheduled(cron = "1 * 11 19 7 *")
     public void cronOnce(){
         run();
     }
@@ -59,7 +59,7 @@ public class TaskDo {
 
     public void run() {
 
-        L.log.debug("run");
+        L.log.info("run");
 
         PersonRefer personRefer = personReferService.selectLastOne();
         long lastId = 0;
@@ -69,8 +69,25 @@ public class TaskDo {
         if (personRefer != null) {
             lastId = personRefer.person_id;
         }
+        L.log.info("lastId : {}",lastId);
+
         Properties prop = getProperties();
 
+
+        L.log.info("personLastId : {}",prop.getProperty("personLastId", "0"));
+
+        L.log.info("bankLastId : {}",prop.getProperty("bankLastId", "0"));
+
+        L.log.info("warrantyLastId : {}",prop.getProperty("warrantyLastId", "0"));
+
+
+        L.log.info("warrantyLastPersonId : {}",prop.getProperty("warrantyLastPersonId", "0"));
+
+
+
+        if(true){
+            return;
+        }
 
 
         long s = System.currentTimeMillis();
@@ -84,6 +101,9 @@ public class TaskDo {
 
 
         String bankLastId = prop.getProperty("bankLastId", "0");
+
+        L.log.info("bankLastId : {}",bankLastId);
+
         lastId = Long.valueOf(bankLastId);
         flag = doBank(cacheAccountUuid, lastId);
         prop.setProperty("bankLastId",flag+"");
@@ -393,8 +413,12 @@ public class TaskDo {
             File file  = new File("a.properties");
             if(!file.exists()){
                 file.createNewFile();
+
             }
-            System.out.println(file.getAbsolutePath());
+
+            L.log.info("path {}",file.getAbsolutePath());
+
+
             InputStream in =  new BufferedInputStream(new FileInputStream("a.properties"));
             prop.load(in);     ///加载属性列表
         } catch (FileNotFoundException e) {
