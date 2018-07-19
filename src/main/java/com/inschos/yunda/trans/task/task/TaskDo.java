@@ -47,7 +47,7 @@ public class TaskDo {
 
     private final int limit = 1000;
 
-    @Scheduled(cron = "1 1 21 15 7 *")
+    @Scheduled(cron = "1 7 11 19 7 *")
     public void cronOnce(){
         run();
     }

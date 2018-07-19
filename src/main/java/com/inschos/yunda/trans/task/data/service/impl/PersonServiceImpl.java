@@ -62,7 +62,7 @@ public class PersonServiceImpl implements PersonService {
                 account.email = person.email;
                 account.token = null;
                 account.status = 1;
-                account.sys_id = 1000;
+                account.sys_id = 1001;
                 account.user_type = 1;
                 account.user_id = String.valueOf(person.id);
                 account.salt = StringKit.randStr(6);
