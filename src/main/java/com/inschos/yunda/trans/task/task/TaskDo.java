@@ -10,6 +10,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.*;
 
 /**
@@ -482,6 +484,7 @@ public class TaskDo {
         wPage.offset = limit;
         List<CustWarrantyCost> comCustWarranties = null;
         wPage.curTime = TimeKit.getDayStartTime();
+        DecimalFormat decimalFormat = new DecimalFormat("#0.00");
         do {
             wPage.lastId = lastId;
             comCustWarranties = custWarrantyCostService.selectPageValid(wPage);
@@ -490,13 +493,17 @@ public class TaskDo {
                 List<CustWarrantyBrokerage> list = new ArrayList<>();
                 for (CustWarrantyCost custWarrantyCost : comCustWarranties) {
                     CustWarrantyBrokerage brokerage = new CustWarrantyBrokerage();
-
+                    String premium = custWarrantyCost.premium;
                     brokerage.cost_id = custWarrantyCost.id;
-                    brokerage.manager_money = "0.98";
+
+                    BigDecimal bigDecimal = new BigDecimal(premium);
+
+
+                    brokerage.manager_money = decimalFormat.format(bigDecimal.multiply(new BigDecimal("0.49")).doubleValue());
                     brokerage.manager_rate = "49";
-                    brokerage.ins_money = "1";
+                    brokerage.ins_money = decimalFormat.format(bigDecimal.multiply(new BigDecimal("0.5")).doubleValue());
                     brokerage.ins_rate = "50";
-                    brokerage.warranty_money = "1";
+                    brokerage.warranty_money = brokerage.ins_money;
                     brokerage.warranty_rate = "50";
                     brokerage.warranty_uuid = custWarrantyCost.warranty_uuid;
                     brokerage.manager_uuid = "14463303497682968";
