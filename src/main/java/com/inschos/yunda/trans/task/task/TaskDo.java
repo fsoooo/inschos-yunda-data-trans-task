@@ -335,10 +335,10 @@ public class TaskDo {
 
                     CustWarrantyCost cost = new CustWarrantyCost();
                     cost.warranty_uuid = old.warranty_uuid;//不为空
-                    cost.pay_time = old.start_time;//应支付时间
+                    cost.pay_time = old.created_at;//应支付时间
                     cost.phase = 1;//分期：第几期
                     cost.premium = old.premium;//保单价格
-                    cost.actual_pay_time = old.start_time;//实际支付时间
+                    cost.actual_pay_time = old.created_at;//实际支付时间
                     cost.pay_way = old.pay_way;//支付方式 1 银联 2 支付宝 3 微信 4现金
                     cost.pay_money = old.premium;
 
@@ -491,6 +491,7 @@ public class TaskDo {
                 for (CustWarrantyCost custWarrantyCost : comCustWarranties) {
                     CustWarrantyBrokerage brokerage = new CustWarrantyBrokerage();
 
+                    brokerage.cost_id = custWarrantyCost.id;
                     brokerage.manager_money = "0.98";
                     brokerage.manager_rate = "49";
                     brokerage.ins_money = "1";
@@ -499,7 +500,7 @@ public class TaskDo {
                     brokerage.warranty_rate = "50";
                     brokerage.warranty_uuid = custWarrantyCost.warranty_uuid;
                     brokerage.manager_uuid = "14463303497682968";
-                    brokerage.created_at = brokerage.updated_at = TimeKit.currentTimeMillis();
+                    brokerage.created_at = brokerage.updated_at = custWarrantyCost.created_at;
                     lastId = custWarrantyCost.id;
                     list.add(brokerage);
                 }
