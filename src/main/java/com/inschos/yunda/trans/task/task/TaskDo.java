@@ -500,11 +500,11 @@ public class TaskDo {
 
 
                     brokerage.manager_money = decimalFormat.format(bigDecimal.multiply(new BigDecimal("0.49")).doubleValue());
-                    brokerage.manager_rate = "49";
+                    brokerage.manager_rate = "0.49";
                     brokerage.ins_money = decimalFormat.format(bigDecimal.multiply(new BigDecimal("0.5")).doubleValue());
-                    brokerage.ins_rate = "50";
+                    brokerage.ins_rate = "0.50";
                     brokerage.warranty_money = brokerage.ins_money;
-                    brokerage.warranty_rate = "50";
+                    brokerage.warranty_rate = "0.50";
                     brokerage.warranty_uuid = custWarrantyCost.warranty_uuid;
                     brokerage.manager_uuid = "14463303497682968";
                     brokerage.created_at = brokerage.updated_at = custWarrantyCost.created_at;
