@@ -59,7 +59,7 @@ public class TaskDo {
     public void cronOnce(){
         run();
     }
-    @Scheduled(cron = "0 30 0 * * *")
+    @Scheduled(cron = "0 25 11 * * *")
     public void cronEvDay(){
         run();
     }
